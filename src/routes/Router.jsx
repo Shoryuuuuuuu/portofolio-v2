@@ -1,15 +1,17 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Loading from "../components/common/loading/Loading";
+
 const Home = lazy(() => import("../pages/Home"));
 const Main = lazy(() => import("../layouts/Main"));
 
-const repoName = import.meta.env.VITE_REPO_NAME || "";
+// HAPUS BARIS INI: Tidak diperlukan di Vercel
+// const repoName = import.meta.env.VITE_REPO_NAME || ""; 
 
 export const router = createBrowserRouter(
   [
     {
-      path: `/`,
+      path: "/", // Pastikan tetap "/"
       element: (
         <Suspense fallback={<Loading />}>
           <Main />
@@ -18,10 +20,11 @@ export const router = createBrowserRouter(
       children: [
         {
           path: "/",
-          element: <Home></Home>,
+          element: <Home />,
         },
       ],
     },
-  ],
-  { basename }
+  ]
+  // HAPUS BAGIAN INI: Ini penyebab error "basename is not defined"
+  // { basename } 
 );
